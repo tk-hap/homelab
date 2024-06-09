@@ -3,7 +3,7 @@ data "local_file" "ssh_public_key" {
 }
 
 resource "proxmox_virtual_environment_vm" "development_ubuntu_vm" {
-  name      = "test-ubuntu"
+  name      = "development-ubuntu"
   node_name = "proxmox"
 
   initialization {
@@ -13,15 +13,13 @@ resource "proxmox_virtual_environment_vm" "development_ubuntu_vm" {
         gateway = "192.168.0.1"
       }
     }
-    user_account {
-      username = "ubuntu"
-      keys     = [trimspace(data.local_file.ssh_public_key.content)]
-    }
+
+    user_data_file_id = proxmox_virtual_environment_file.cloud_config_development.id
   }
 
   cpu {
+    cores = 2
     architecture = "x86_64"
-    cores        = 2
   }
 
   memory {
@@ -42,10 +40,31 @@ resource "proxmox_virtual_environment_vm" "development_ubuntu_vm" {
   }
 }
 
-resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
-  content_type = "iso"
+resource "proxmox_virtual_environment_file" "cloud_config_development" {
+
+  content_type = "snippets"
   datastore_id = "local"
   node_name    = "proxmox"
 
-  url = "https://cloud-images.ubuntu.com/releases/noble/release/ubuntu-24.04-server-cloudimg-amd64.img"
+  source_raw {
+    data = <<-EOF
+        #cloud-config
+        users:
+          - default
+          - name: ubuntu
+            groups:
+              - sudo
+            shell: /bin/bash
+            ssh_authorized_keys:
+              - ${trimspace(data.local_file.ssh_public_key.content)}
+            sudo: ALL=(ALL) NOPASSWD:ALL
+        runcmd:
+          - apt update
+          - apt install -y ansible-core
+          - ansible-pull -U https://github.com/tk-hap/homelab ansible/development-host.yml
+          - echo "done" > /tmp/cloud-config.done
+        EOF
+
+    file_name = "cloud-config-development.yaml"
+  }
 }
