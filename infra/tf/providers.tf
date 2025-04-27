@@ -2,18 +2,21 @@ terraform {
   required_providers {
     proxmox = {
       source  = "bpg/proxmox"
-      version = "0.59.0"
+      version = "0.76.1"
+    }
+    talos = {
+      source  = "siderolabs/talos"
+      version = "0.8.0-alpha.0"
     }
 
   }
 }
 
 provider "proxmox" {
-  endpoint = "https://192.168.0.254:8006"
-  username = "root@pam"
-  # use PROXMOX_VE_PASSWORD env var 'password = ""'
-  insecure = true
-  tmp_dir  = "/var/tmp"
+  endpoint  = var.proxmox.host
+  api_token = var.proxmox.api_token
+  insecure  = var.proxmox.insecure
+  tmp_dir   = "/var/tmp"
 
   ssh {
     agent = true
