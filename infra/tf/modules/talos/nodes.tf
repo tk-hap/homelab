@@ -18,11 +18,13 @@ resource "proxmox_virtual_environment_vm" "talos_node" {
     iothread     = true
     discard      = "on"
     ssd          = true
-    size         = 20
+    size         = 50
   }
 
   cdrom {
-    file_id      = proxmox_virtual_environment_download_file.talos_linux_image.id
+    file_id = proxmox_virtual_environment_download_file.talos_linux_image[
+      coalesce(each.value.image_version, var.default_image_version)
+    ].id
     interface    = "ide0"
   }
 

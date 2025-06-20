@@ -1,7 +1,7 @@
 module "talos" {
   source = "./modules/talos"
 
-  image_version = "v1.9.5"
+  default_image_version = "v1.10.1"
 
   cluster = {
     name          = "homelab-01"
@@ -16,18 +16,21 @@ module "talos" {
       cpu          = 2
       ram          = 12000
       machine_type = "controlplane"
+      image_version = "v1.10.1"
     }
     "control-02" = {
       ip           = "192.168.0.206"
       cpu          = 2
       ram          = 12000
       machine_type = "controlplane"
+      image_version = "v1.10.1"
     }
     "control-03" = {
       ip           = "192.168.0.207"
       cpu          = 2
       ram          = 12000
       machine_type = "controlplane"
+      image_version = "v1.10.1"
     }
   }
 }

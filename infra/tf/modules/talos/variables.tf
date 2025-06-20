@@ -4,6 +4,7 @@ variable "nodes" {
     cpu          = number
     ram          = number
     machine_type = string
+    image_version = optional(string)
   }))
   description = "Nodes configuration"
 }
@@ -18,8 +19,8 @@ variable "cluster" {
   description = "Cluster configuration"
 }
 
-variable "image_version" {
+variable "default_image_version" {
+  description = "Default Talos image version for nodes not specified in nodes map"
   type        = string
-  description = "Talos image version"
   default     = "v1.9.5"
 }

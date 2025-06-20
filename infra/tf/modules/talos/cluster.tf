@@ -44,7 +44,8 @@ resource "talos_machine_configuration_apply" "controlplane" {
   machine_configuration_input = data.talos_machine_configuration.controlplane.machine_configuration
   node                        = each.value.ip
   config_patches = [
-    file("${path.module}/files/cp-scheduling.yaml"),
+    file("${path.module}/files/machine-config/cp-scheduling.yaml"),
+    file("${path.module}/files/machine-config/longhorn.yaml"),
   ]
 }
 
