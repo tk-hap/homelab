@@ -1,3 +1,4 @@
+# Extract talosconfig from the module output
 module "talos" {
   source = "./modules/talos"
 
