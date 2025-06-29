@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor
+  namespace: argocd
+spec:
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+  project: default
+  sources:
+    - chart: harbor
+      repoURL: https://helm.goharbor.io
+      targetRevision: v1.17.1
+      helm:
+        values: |
+          expose:
+            type: nodePort
+            tls:
+              enabled: true
+              certSource: secret
+              secret:
+                secretName: harbor-tls
+            nodePort:
+              name: harbor
+              ports:
+                http:
+                  port: 80
+                  nodePort: 30080
+                https:
+                  port: 443
+                  nodePort: 30443
+
+          externalURL: https://harbor.192-168-0-207.sslip.io:30443
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: harbor

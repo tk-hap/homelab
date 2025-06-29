@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: harbor-tls
+  namespace: harbor
+spec:
+  secretName: harbor-tls
+  dnsNames:
+    - harbor.192-168-0-207.sslip.io
+    - harbor.harbor.svc.cluster.local
+    - localhost
+  ipAddresses:
+    - 127.0.0.1
+    - ::1
+    - 192.168.0.207
+  issuerRef:
+    name: cluster-ca-issuer
+    kind: ClusterIssuer
