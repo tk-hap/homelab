@@ -1,0 +1,5 @@
+proxmox = {
+  host      = "https://EXAMPLE_HOST"
+  api_token = "EXAMPLE_USER@EXAMPLE_TOKEN"
+  insecure  = true # For HTTP connections
+}
