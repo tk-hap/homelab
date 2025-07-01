@@ -1,6 +1,6 @@
 # Homelab Repository
 
-This repository contains infrastructure and application configurations for a personal homelab environment. It uses Terraform for provisioning virtual machines and clusters on Proxmox, as well as Argo CD for managing Kubernetes applications.
+This repository contains infrastructure and application configurations for my personal homelab environment. It uses Terraform for provisioning virtual machines and clusters on Proxmox, as well as Argo CD for managing Kubernetes applications.
 
 ## Repository Structure
 
