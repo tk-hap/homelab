@@ -32,6 +32,9 @@ spec:
                   nodePort: 30443
 
           externalURL: https://harbor.192-168-0-207.sslip.io:30443
+    - repoURL: https://github.com/tk-hap/homelab.git
+      path: apps/harbor/resources
+      targetRevision: main
 
   destination:
     server: https://kubernetes.default.svc
