@@ -47,6 +47,7 @@ resource "talos_machine_configuration_apply" "controlplane" {
     file("${path.module}/files/machine-config/cp-scheduling.yaml"),
     file("${path.module}/files/machine-config/longhorn.yaml"),
     file("${path.module}/files/machine-config/custom-ca.yaml"),
+    file("${path.module}/files/machine-config/cni.yaml"),
   ]
 }
 
@@ -59,6 +60,7 @@ resource "talos_machine_configuration_apply" "worker" {
   config_patches = [
     file("${path.module}/files/machine-config/longhorn.yaml"),
     file("${path.module}/files/machine-config/custom-ca.yaml"),
+    file("${path.module}/files/machine-config/cni.yaml"),
   ]
 }
 
